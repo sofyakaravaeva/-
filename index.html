@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Suite — Все шифры</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Криптографические алгоритмы</h1>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'caesar')">Цезарь</button>
+            <button class="tab-btn" onclick="openTab(event, 'vigenere')">Виженер</button>
+            <button class="tab-btn" onclick="openTab(event, 'adfgvx')">ADFGVX</button>
+            <button class="tab-btn" onclick="openTab(event, 'elgamal')">Эль-Гамаль</button>
+            <button class="tab-btn" onclick="openTab(event, 'rc5')">RC5</button>
+        </div>
+
+        <div id="caesar" class="tab-content active">
+            <div class="section">
+                <label>Открытый текст:</label>
+                <textarea id="caesar-in" placeholder="Введите текст..."></textarea>
+                <label>Ключ (число):</label>
+                <input type="number" id="caesar-key" value="3">
+                <div class="btns">
+                    <button class="btn-enc" onclick="runCaesar(false)">Зашифровать</button>
+                    <button class="btn-dec" onclick="runCaesar(true)">Расшифровать</button>
+                </div>
+                <textarea id="caesar-out" readonly placeholder="Результат..."></textarea>
+            </div>
+        </div>
+
+        <div id="vigenere" class="tab-content">
+            <div class="section">
+                <label>Текст (Латиница):</label>
+                <textarea id="vigenere-in"></textarea>
+                <label>Ключ-слово:</label>
+                <input type="text" id="vigenere-key" placeholder="LEMON">
+                <div class="btns">
+                    <button class="btn-enc" onclick="runVigenere(false)">Зашифровать</button>
+                    <button class="btn-dec" onclick="runVigenere(true)">Расшифровать</button>
+                </div>
+                <textarea id="vigenere-out" readonly></textarea>
+            </div>
+        </div>
+
+        <div id="adfgvx" class="tab-content">
+            <div class="section">
+                <label>Текст:</label>
+                <textarea id="adfgvx-in"></textarea>
+                <label>Ключ перестановки:</label>
+                <input type="text" id="adfgvx-key" placeholder="PRIVACY">
+                <div class="btns">
+                    <button class="btn-enc" onclick="runADFGVX(false)">Зашифровать</button>
+                    <button class="btn-dec" onclick="runADFGVX(true)">Расшифровать</button>
+                </div>
+                <textarea id="adfgvx-out" readonly></textarea>
+            </div>
+        </div>
+
+        <div id="elgamal" class="tab-content">
+            <div class="key-panel">
+                <button onclick="uiGenerateKeys()">Генерация ключей</button>
+                <div class="keys-row">
+                    P: <input id="pubP" readonly> G: <input id="pubG" readonly> 
+                    Y: <input id="pubY" readonly> X: <input id="privX" readonly>
+                </div>
+            </div>
+            <textarea id="eg-in" placeholder="Сообщение..."></textarea>
+            <div class="btns">
+                <button class="btn-enc" onclick="uiEncrypt()">Зашифровать</button>
+                <button class="btn-dec" onclick="uiDecrypt()">Расшифровать</button>
+            </div>
+            <textarea id="eg-out" readonly></textarea>
+        </div>
+
+        <div id="rc5" class="tab-content">
+            <div class="section">
+                <label>Ключ (16 символов):</label>
+                <div class="controls">
+                    <input type="text" id="rc5-key" value="1234567890123456" maxlength="16">
+                    <button onclick="genRC5Key()">Случайный ключ</button>
+                </div>
+                <textarea id="rc5-in" placeholder="Текст..."></textarea>
+                <div class="btns">
+                    <button class="btn-enc" onclick="runRC5(false)">Зашифровать</button>
+                    <button class="btn-dec" onclick="runRC5(true)">Расшифровать</button>
+                </div>
+                <textarea id="rc5-out" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/caesar.js"></script>
+    <script src="js/vigenere.js"></script>
+    <script src="js/adfgvx.js"></script>
+    <script src="js/elgamal.js"></script>
+    <script src="js/rc5.js"></script>
+</body>
+</html>
