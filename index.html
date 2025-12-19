@@ -15,6 +15,7 @@
             <button class="tab-btn" onclick="openTab(event, 'adfgvx')">ADFGVX</button>
             <button class="tab-btn" onclick="openTab(event, 'elgamal')">Эль-Гамаль</button>
             <button class="tab-btn" onclick="openTab(event, 'rc5')">RC5</button>
+            <button class="tab-btn" onclick="openTab(event, 'hashing')">Хеширование</button>
         </div>
 
         <div id="caesar" class="tab-content active">
@@ -90,6 +91,18 @@
                 <textarea id="rc5-out" readonly></textarea>
             </div>
         </div>
+
+        <div id="hashing" class="tab-content">
+            <div class="section">
+                <label>Текст для хеширования:</label>
+                <textarea id="hash-in" placeholder="Введите текст..."></textarea>
+                <div class="btns">
+                    <button class="btn-enc" onclick="runHash()">Вычислить хеш</button>
+                </div>
+                <label>Результат (Hex):</label>
+                <textarea id="hash-out" readonly placeholder="Хеш-сумма появится здесь..."></textarea>
+            </div>
+        </div>
     </div>
 
     <script src="js/main.js"></script>
@@ -98,5 +111,6 @@
     <script src="js/adfgvx.js"></script>
     <script src="js/elgamal.js"></script>
     <script src="js/rc5.js"></script>
+    <script src="js/hash.js"></script>
 </body>
 </html>
