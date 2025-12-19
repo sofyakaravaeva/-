@@ -7,17 +7,14 @@ class RC5 {
         this.Q32 = 0x9E3779B9;
     }
 
-    // Циклический сдвиг влево
     rotl(val, shift) {
         return ((val << (shift & 31)) | (val >>> (32 - (shift & 31)))) >>> 0;
     }
 
-    // Циклический сдвиг вправо
     rotr(val, shift) {
         return ((val >>> (shift & 31)) | (val << (32 - (shift & 31)))) >>> 0;
     }
 
-    // Расширение ключа
     expandKey(key) {
         let L = new Uint32Array(4);
         for (let i = 0; i < 16; i++) {
@@ -42,7 +39,6 @@ class RC5 {
         return S;
     }
 
-    // Шифрование одного блока (64 бит)
     encryptBlock(vA, vB, S) {
         let A = (vA + S[0]) >>> 0;
         let B = (vB + S[1]) >>> 0;
@@ -53,7 +49,6 @@ class RC5 {
         return [A, B];
     }
 
-    // Дешифрование одного блока (64 бит)
     decryptBlock(vA, vB, S) {
         let A = vA;
         let B = vB;
@@ -64,6 +59,19 @@ class RC5 {
         B = (B - S[1]) >>> 0;
         A = (A - S[0]) >>> 0;
         return [A, B];
+    }
+
+    // Вспомогательный метод для хеширования (работает с сырыми байтами)
+    encodeForHash(block8, key16) {
+        const S = this.expandKey(key16);
+        const viewIn = new DataView(block8.buffer, block8.byteOffset, 8);
+        let [resA, resB] = this.encryptBlock(viewIn.getUint32(0, true), viewIn.getUint32(4, true), S);
+        
+        const out = new Uint8Array(8);
+        const viewOut = new DataView(out.buffer);
+        viewOut.setUint32(0, resA, true);
+        viewOut.setUint32(4, resB, true);
+        return out;
     }
 
     pad(data) {
@@ -79,7 +87,6 @@ class RC5 {
         return data.slice(0, data.length - padding);
     }
 
-    // Метод для вызова из интерфейса
     encode(text, keyStr) {
         const encoder = new TextEncoder();
         const data = this.pad(encoder.encode(text));
@@ -118,7 +125,6 @@ class RC5 {
     }
 }
 
-// Функции для связи с HTML-интерфейсом
 const rc5 = new RC5();
 
 function genRC5Key() {
@@ -132,16 +138,9 @@ function runRC5(isDec) {
     const input = document.getElementById('rc5-in').value;
     const key = document.getElementById('rc5-key').value;
     const output = document.getElementById('rc5-out');
-
-    if (key.length !== 16) {
-        alert("Ключ должен быть ровно 16 символов!");
-        return;
-    }
-
+    if (key.length !== 16) { alert("Ключ должен быть ровно 16 символов!"); return; }
     try {
         if (!input) return;
         output.value = isDec ? rc5.decode(input, key) : rc5.encode(input, key);
-    } catch (e) {
-        alert("Ошибка: " + e.message);
-    }
+    } catch (e) { alert("Ошибка: " + e.message); }
 }

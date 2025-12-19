@@ -6,7 +6,7 @@ function vigenereCipher(text, key, decrypt) {
     for (let i = 0; i < text.length; i++) {
         let char = text[i];
         let code = char.charCodeAt(0);
-        if (code >= 65 && code <= 122) { // Простая латиница
+        if (code >= 65 && code <= 122) { 
             let isUpper = code <= 90;
             let start = isUpper ? 65 : 97;
             let k = key[j % key.length].charCodeAt(0) - 65;
